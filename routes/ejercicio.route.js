@@ -25,4 +25,20 @@ router.post('/registrar-ejercicio', (req, res) => {
     });
 });
 
+router.get('/listar-ejercicios', (req, res) => {
+    Ejercicios.find((err, ejercicio_db) => {
+        if (err) {
+            res.json({
+                'msj': 'Los ejercicios no se encontro',
+                err
+            });
+        } else {
+            res.json({
+                'msj': 'Los ejercicios se encontraron correctamente',
+                ejercicio_db
+            });
+        }
+    });
+});
+
 module.exports = router;
