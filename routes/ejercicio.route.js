@@ -41,4 +41,40 @@ router.get('/listar-ejercicios', (req, res) => {
     });
 });
 
+router.get('/buscar-ejercicios', (req, res) => {
+    Ejercicios.findOne({ _id: req.query._id }, (err, ejercicio_db) => {
+        if (err) {
+            res.json({
+                'msj': 'El ejercicio no se encontro',
+                err
+            });
+        } else {
+            res.json({
+                ejercicio_db
+            });
+        }
+    });
+});
+
+router.put('/buscar-ejercicios', (req, res) => {
+    Ejercicios.updateOne({ _id: req.body._id }, {
+        $set: {
+            nombre: req.body.nombre,
+            zona: req.body.zona,
+            estado: req.body.estado,
+        }
+    }, (err, ejercicio_db) => {
+        if (err) {
+            res.json({
+                'msj': 'El ejercicio no se encontro',
+                err
+            });
+        } else {
+            res.json({
+                ejercicio_db
+            });
+        }
+    });
+});
+
 module.exports = router;
