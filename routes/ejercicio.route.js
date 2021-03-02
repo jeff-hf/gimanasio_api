@@ -1,13 +1,15 @@
 'use strict';
 
+const { json } = require('body-parser');
 const express = require('express');
 const Ejercicios = require('../models/ejercicios.model');
 const router = new express.Router();
 
 router.post('/registrar-ejercicio', (req, res) => {
+    let ejercicio = JSON.parse(req.body.obj)
     let nuevo_ejercicio = new Ejercicios({
-        'nombre': req.body.nombre,
-        'zona': req.body.zona,
+        'nombre': ejercicio.nombre,
+        'zona': ejercicio.zona,
         'estado': 'Activo'
     });
     nuevo_ejercicio.save((err, ejercicio_db) => {
