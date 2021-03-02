@@ -56,7 +56,7 @@ router.get('/buscar-ejercicios', (req, res) => {
     });
 });
 
-router.put('/buscar-ejercicios', (req, res) => {
+router.put('/actualizar-ejercicios', (req, res) => {
     Ejercicios.updateOne({ _id: req.body._id }, {
         $set: {
             nombre: req.body.nombre,
