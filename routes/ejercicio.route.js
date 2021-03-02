@@ -59,11 +59,12 @@ router.get('/buscar-ejercicios', (req, res) => {
 });
 
 router.put('/actualizar-ejercicios', (req, res) => {
-    Ejercicios.updateOne({ _id: req.body._id }, {
+    let ejercicio = JSON.parse(req.body.obj)
+    Ejercicios.updateOne({ _id: ejercicio._id }, {
         $set: {
-            nombre: req.body.nombre,
-            zona: req.body.zona,
-            estado: req.body.estado,
+            nombre: ejercicio.nombre,
+            zona: ejercicio.zona,
+            estado: ejercicio.estado,
         }
     }, (err, ejercicio_db) => {
         if (err) {
