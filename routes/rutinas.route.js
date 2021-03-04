@@ -6,7 +6,7 @@ const Rutinas = require('../models/rutinas.model');
 const router = new express.Router();
 
 router.post('/registrar-rutina', (req, res) => {
-    let rutina = json.parse(req.body.rutina);
+    let rutina = json.parse(req.body.obj);
 
     let nueva_rutina = new Rutinas({
         creacion: rutina.creacion,
