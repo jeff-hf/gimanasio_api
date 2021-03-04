@@ -13,7 +13,7 @@ router.post('/registrar-rutina', (req, res) => {
         vancimiento: rutina.vancimiento,
     });
     rutina.lista_ejercicios.forEach(ejercicio => {
-        nueva_rutina.ejercicios.push(ejercicio)
+        nueva_rutina.ejercicios.push(ejercicio._id)
     });
 
     nueva_rutina.save((err, rutina_db) => {
