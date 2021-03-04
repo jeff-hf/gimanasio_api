@@ -25,7 +25,7 @@ router.post('/registrar-rutina', (req, res) => {
         } else {
             res.json({
                 'msj': 'La rutina se registro correctamente',
-                ejercicio_db
+                rutina_db
             });
         }
     });
