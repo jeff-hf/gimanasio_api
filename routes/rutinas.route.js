@@ -31,7 +31,7 @@ router.post('/registrar-rutina', (req, res) => {
     });
 });
 
-router.get('listar-rutinas', (req, res) => {
+router.get('/listar-rutinas', (req, res) => {
     Rutinas.find().populate('ejercicios').exec((err, lista) => {
         if (err) {
             res.json({
