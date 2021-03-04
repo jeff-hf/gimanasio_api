@@ -5,12 +5,12 @@ const express = require('express');
 const Rutinas = require('../models/rutinas.model');
 const router = new express.Router();
 
-router.post('/registrar-rutina', (res, res) => {
+router.post('/registrar-rutina', (req, res) => {
     let rutina = json.parse(req.body.rutina);
 
     let nueva_rutina = new Rutinas({
-        creacion = rutina.creacion,
-        vancimiento = rutina.vancimiento,
+        creacion: rutina.creacion,
+        vancimiento: rutina.vancimiento,
     });
     rutina.lista_ejercicios.forEach(ejercicio => {
         nueva_rutina.ejercicios.push(ejercicio)
