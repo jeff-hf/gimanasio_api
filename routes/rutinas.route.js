@@ -1,50 +1,77 @@
 'use strict';
-
-const { json } = require('body-parser');
 const express = require('express');
-const Rutinas = require('../models/rutinas.model');
-const router = new express.Router();
+const router = express.Router();
+const Rutina = require('../models/rutinas.model');
 
 router.post('/registrar-rutina', (req, res) => {
     let rutina = JSON.parse(req.body.obj);
 
-    let nueva_rutina = new Rutinas({
+    let nueva_rutina = new Rutina({
         creacion: rutina.creacion,
-        vancimiento: rutina.vancimiento,
-    });
-    rutina.lista_ejercicios.forEach(ejercicio => {
-        nueva_rutina.ejercicios.push(ejercicio._id)
+        vencimiento: rutina.vencimiento
     });
 
-    nueva_rutina.save((err, rutina_db) => {
+    rutina.lista_ejercicios.forEach(ejercicio => {
+        nueva_rutina.ejercicios.push(ejercicio._id);
+    });
+
+    nueva_rutina.save((err, rutina) => {
         if (err) {
             res.json({
-                'msj': 'La rutina no se registro',
+                msj: 'La rutina no se pudo registrar',
                 err
             });
         } else {
             res.json({
-                'msj': 'La rutina se registro correctamente',
-                rutina_db
+                msj: 'La rutina se registró correctamente',
+                rutina
             });
         }
     });
 });
-
 router.get('/listar-rutinas', (req, res) => {
-    Rutinas.find().populate('ejercicios').exec((err, lista) => {
+    Rutina.find().populate('ejercicios').exec((err, lista) => {
         if (err) {
             res.json({
-                'msj': 'La rutina no se registro',
+                msj: 'Las rutinas no se pudieron listar',
                 err
             });
         } else {
             res.json({
-                'msj': 'La rutina se listo',
                 lista
             });
         }
-    })
+    });
 });
+router.put('eliminar-ejercicio-rutina', (req, res) => {
+    // Recibe el _id de la rutina, y la lista de _ids de los ejercicios a eliminar
+    let ejercicios_eliminar = JSON.parse(req.body.ejercicios);
+    Rutina.findById(req.body._id, (err, rutina) => {
+        if (err) {
+            res.json({
+                msj: 'La rutina no se encontró',
+                err
+            });
+        } else {
+            ejercicios_eliminar.forEach(ejercicio => {
+                rutina.ejercicios.pull(ejercicio)
+            });
+            rutina.save((err, rutina) => {
+                if (err) {
+                    res.json({
+                        msj: 'La rutina no se pudo registrar',
+                        err
+                    });
+                } else {
+                    res.json({
+                        msj: 'La rutina se registró correctamente',
+                        rutina
+                    });
+                }
+            });
+        }
+    });
+});
+
 
 module.exports = router;
